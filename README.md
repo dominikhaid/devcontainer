@@ -1,0 +1,2 @@
+# vscode
+VSCode Project Settings

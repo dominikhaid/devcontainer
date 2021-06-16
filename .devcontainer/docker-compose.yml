@@ -1,0 +1,109 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        # BASE IMAGE
+        # [Choice] Python, PHP, Node / Typescript:
+        # mcr.microsoft.com/vscode/devcontainers/php
+        # mcr.microsoft.com/vscode/devcontainers/typescript-node
+        # mcr.microsoft.com/vscode/devcontainers/python
+        BASE_IMAGE: "mcr.microsoft.com/vscode/devcontainers/php"
+
+        # SYSTEMTOOLS
+        # [Choice] Install System Tools
+        INSTALL_SYSTOOLS: "true"
+
+        # PHP
+        # [Choice] Install Php
+        INSTALL_PHP: "true"
+        # [Choice] Image Variant
+        # PHP version: 8, 8.0, 7, 7.4, 7.3
+        # Python version: 3, 3.6, 3.7, 3.8, 3.9
+        # Node version: 12, 14, 16
+        VARIANT: 8
+
+        # PYTHON
+        # [Choice] Install Python
+        INSTALL_PYTHON: "false"
+        # NODE
+        # [Choice] Install Node.js
+        INSTALL_NODE: "true"
+        NODE_VERSION: "lts/*"
+
+        # RUST
+        # [Choice] Install RUST
+        INSTALL_RUST: "true"
+
+        # DOCKER USER
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+        USERNAME: "vscode"
+
+    volumes:
+      - ..:/workspace:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    #network_mode: "services:db"
+    networks:
+      db:
+        ipv4_address: 172.19.0.4
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    networks:
+      db:
+        ipv4_address: 172.19.0.2
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - postgres_backup_local:/backups
+      - type: bind
+        source: ../sql/create_tables.sql
+        target: /docker-entrypoint-initdb.d/create_tables.sql
+    environment:
+      #POSTGRES_USER: postgres
+      #POSTGRES_DB: postgres
+      #POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hive
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_USER: "dominik"
+      POSTGRES_HOST_AUTH_METHOD: "password"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    networks:
+      db:
+        ipv4_address: 172.19.0.3
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@example.com
+      PGADMIN_DEFAULT_PASSWORD: userpass
+    ports:
+      - 8081:80
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+volumes:
+  postgres_data_local:
+  postgres_backup_local:
+
+networks:
+  db:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24

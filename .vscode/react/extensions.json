@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "mgmcdermott.vscode-language-babel",
+    "dsznajder.es7-react-js-snippets",
+    "zignd.html-css-class-completion",
+    "xabikos.javascriptsnippets",
+    "ms-vscode.vscode-typescript-next",
+    "sburg.vscode-javascript-booster",
+    "waderyan.nodejs-extension-pack",
+    "jasonnutter.search-node-modules",
+    "burkeholland.simple-react-snippets",
+    "rangav.vscode-thunder-client",
+    "mariojorgeoliveira.typescriptdocumenter"
+  ]
+}

@@ -1,0 +1,12 @@
+[submodule "vs-php"]
+	path = vs-php
+	url = git@github.com:dominikhaid/vs-php.git
+[submodule "vs-react"]
+	path = vs-react
+	url = git@github.com:dominikhaid/vs-react.git
+[submodule "vs-python"]
+	path = vs-python
+	url = git@github.com:dominikhaid/vs-python.git
+[submodule "vs-angular"]
+	path = vs-angular
+	url = git@github.com:dominikhaid/vs-angular.git
