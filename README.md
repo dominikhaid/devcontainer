@@ -1,9 +1,8 @@
 # DEVCONTAINER
 
-Based on Micsroft VScode .devcontainer images. Uses docker-compose along a regular dockerfile and the .devcontainer.json.
-Configured for diffrent developer envoirements. Extended with some basic system tools und additonal Rust and Cargo. Preconfigured recommanded VSCode extensions for each envoirement. Suppports all image variants.
+Based on Microsoft VS Code  .devcontainer images. Uses docker-compose along a regular Dockerfile and the .devcontainer.json. Configured for different developer environments. Extended with some basic system tools and additional Rust and Cargo. Preconfigured recommended VS Code extensions for each environment. Supports all image variants.
 
-## Supported Evoirements
+## Supported Environments
 
 - PHP
 - Node / Angular
